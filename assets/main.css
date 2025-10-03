@@ -1,1 +1,17 @@
 @import url(/assets/css/chota.min.css);
+
+:root {
+    --bg-color: #222;
+    --text-color: #fefefe;
+    --board-color: peru;
+
+    --sun-color: white;
+    --moon-color: black;
+    --border-color: gray;
+
+    --square-color: #0003;
+
+    /* CHOTA */
+    --color-primary: var(--board-color);
+    --font-color: var(--text-color);
+}
