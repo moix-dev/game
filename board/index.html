@@ -1,57 +1,52 @@
 <!DOCTYPE html>
 <html lang="en">
-
-<head>
+  <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Board - Moixllik</title>
     <link rel="stylesheet" href="../assets/style.css">
-</head>
-
-<body>
+  </head>
+  <body>
     <canvas id="board"></canvas>
     <div id="bar-top" class="bar none">
-        <h4>
-            <a href="../" class="btn">&laquo;</a>
-            <a href=""><span></span></a>
-        </h4>
-        <div class="parents grouped">
-            <button class="sun" data-name="sun"></button>
-            <button class="moon" data-name="moon"></button>
-        </div>
+      <h4>
+        <a href="../" class="btn">&laquo;</a>
+        <a href=""><span></span></a>
+      </h4>
+      <div class="parents grouped">
+        <button class="sun" data-name="sun"></button>
+        <button class="moon" data-name="moon"></button>
+      </div>
     </div>
     <div id="bar-bottom" class="bar bottom none"></div>
     <div id="main-menu" class="main-menu">
         <a class="brand" href="../">MOIXLLIK</a>
         <menu>
-            <a href="#andes" onclick="soundBadgePlay()">Andes</a>
-            <a href="#yupana" onclick="soundBadgePlay()">Yupana</a>
+          <a href="#andes" onclick="soundBadgePlay()">Andes</a>
+          <a href="#yupana" onclick="soundBadgePlay()">Yupana</a>
         </menu>
         <hr>
         <div class="flex is-center">
-            <a href="https://www.tiktok.com/@moixllik" target="_blank">
-                <img src="../assets/images/tiktok.svg" alt="tiktok">
-            </a>
-            <a href="https://x.com/moixllik" target="_blank">
-                <img src="../assets/images/x-twitter.svg" alt="x-twitter">
-            </a>
-            <a href="https://discord.gg/6me7JYRwS2" target="_blank">
-                <img src="../assets/images/discord.svg" alt="discord">
-            </a>
+          <a href="https://www.tiktok.com/@moixllik" target="_blank">
+            <img src="../assets/images/tiktok.svg" alt="tiktok">
+          </a>
+          <a href="https://x.com/moixllik" target="_blank">
+            <img src="../assets/images/x-twitter.svg" alt="x-twitter">
+          </a>
+          <a href="https://discord.gg/6me7JYRwS2" target="_blank">
+            <img src="../assets/images/discord.svg" alt="discord">
+          </a>
         </div>
     </div>
-
     <audio id="sound-ply">
-        <source src="../assets/sound/ply.ogg" type="audio/ogg">
-        <source src="../assets/sound/ply.mp3" type="audio/mpeg">
+      <source src="../assets/sound/ply.ogg" type="audio/ogg">
+      <source src="../assets/sound/ply.mp3" type="audio/mpeg">
     </audio>
     <audio id="sound-badge">
-        <source src="../assets/sound/badge.ogg" type="audio/ogg">
-        <source src="../assets/sound/badge.mp3" type="audio/mpeg">
+      <source src="../assets/sound/badge.ogg" type="audio/ogg">
+      <source src="../assets/sound/badge.mp3" type="audio/mpeg">
     </audio>
-
     <script src="../assets/js/board.js"></script>
     <script src="./main.js"></script>
-</body>
-
+  </body>
 </html>
