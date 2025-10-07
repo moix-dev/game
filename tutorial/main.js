@@ -228,6 +228,7 @@ function load() {
 
   mainMenu.classList.add('none');
   barTop.classList.remove('none');
+  barBottom.classList.remove('none');
 
   barTop.querySelector('h4 span').innerHTML = mode.toUpperCase();
   barBottom.innerHTML = '';
