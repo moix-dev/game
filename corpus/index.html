@@ -6,9 +6,54 @@
     <title>Corpus - Moixllik</title>
     <link rel="stylesheet" href="../assets/css/chota.min.css">
     <link rel="stylesheet" href="../assets/main.css">
+    <style>
+      body { max-width: 480px !important; }
+      h1 a { color: inherit; }
+      section { padding-block: 3em; }
+      section .card { margin-block: 1em; }
+    </style>
   </head>
-  <body>
-    <h1><a href="../">MOIXLLIK</a></h1>
-    <p>/corpus</p>
+  <body class="container">
+    <h1 class="text-center"><a href="../">MOIXLLIK</a></h1>
+    <form class="grouped" id="form">
+      <input type="search" name="q" placeholder="Search" required>
+      <button>Search</button>
+    </form>
+    <section id="view"></section>
+    <footer class="text-center">
+      <p>&copy; 2025</p>
+    </footer>
+    <template id="tpl-book">
+      <div class="card">
+        <h2><a href="#">Title</a></h2>
+        <p>Description</p>
+      </div>
+    </template>
+    <script>
+      document
+        .getElementById('form')
+        .addEventListener('submit', async function submit(event) {
+          event.preventDefault();
+          const query = event.target.q.value;
+          const res = await fetch('/api/filter', {
+            method: 'POST', body: query
+          });
+          if (!res.ok) {
+            const view = document.getElementById('view');
+            const tpl = document.getElementById('tpl-book');
+            const items = await res.json();
+            view.innerHTML = '';
+            items.forEach(x=>{
+              const clone = tpl.content.cloneNode(true);
+              const a = clone.querySelector('h2 a');
+              const p = clone.querySelector('p');
+              a.href = x.uri;
+              a.innerHTML = x.title;
+              p.innerHTML = x.desc;
+              view.appendChild(clone);
+            });
+          }
+        });
+    </script>
   </body>
 </html>

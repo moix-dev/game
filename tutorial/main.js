@@ -253,5 +253,14 @@ function toPrev() {
   location.hash = '#' + mode + '/' + (prev < 0 ? 0 : prev);
 }
 
+window.addEventListener('keydown', event=> {
+  if (event.key === 'ArrowLeft') {
+    toPrev();
+  }
+  else if (event.key === 'ArrowRight') {
+    toNext();
+  }
+});
+
 window.addEventListener('hashchange', load);
 load();
