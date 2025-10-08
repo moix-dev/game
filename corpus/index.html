@@ -25,7 +25,7 @@
     </footer>
     <template id="tpl-book">
       <div class="card">
-        <h2><a href="#">Title</a></h2>
+        <h2><a href="#" target="_blank">Title</a></h2>
         <p>Description</p>
       </div>
     </template>
@@ -34,11 +34,9 @@
         .getElementById('form')
         .addEventListener('submit', async function submit(event) {
           event.preventDefault();
-          const query = event.target.q.value;
-          const res = await fetch('/api/filter', {
-            method: 'POST', body: query
-          });
-          if (!res.ok) {
+          const query = encodeURIComponent(event.target.q.value);
+          const res = await fetch('../api/filter.json?q=' + query);
+          if (res.ok) {
             const view = document.getElementById('view');
             const tpl = document.getElementById('tpl-book');
             const items = await res.json();
