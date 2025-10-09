@@ -136,17 +136,10 @@ const tutorial = {
   'squares/0': () => {
     barBottom.innerHTML = '<b>Edge</b><br>Squares on the edge of the board.';
 
-    drawRect(0, 0, 3, 1, hoverColor);
-    drawRect(4, 0, 3, 1, hoverColor);
-
-    drawRect(0, 1, 1, 2, hoverColor);
-    drawRect(0, 4, 1, 2, hoverColor);
-
-    drawRect(6, 1, 1, 2, hoverColor);
-    drawRect(6, 4, 1, 2, hoverColor);
-
-    drawRect(0, 6, 3, 1, hoverColor);
-    drawRect(4, 6, 3, 1, hoverColor);
+    drawRect(0, 0, 7, 1, hoverColor);
+    drawRect(0, 1, 1, 5, hoverColor);
+    drawRect(6, 1, 1, 5, hoverColor);
+    drawRect(0, 6, 7, 1, hoverColor);
   },
   'squares/1': () => {
     barBottom.innerHTML = '<b>Continent</b><br>Squares on the continental part of the board.';
