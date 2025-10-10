@@ -1,103 +1,168 @@
-'use strict';
-
-const sunColor = '#FFF';
-const moonColor = '#000';
-const lineColor = '#222';
-const boardColor = 'PERU';
-const focusColor = '#FFF9';
-const hoverColor = '#0009';
-const squareColor = '#0003';
-
-const canvas = document.getElementById('board');
-const ctx = canvas.getContext('2d');
-
-// Config Canvas
-var box = 0;
-var mX = 0;
-var mY = 0;
-var boardImage = false;
-var sunImages = [];
-var moonImages = [];
-
-// Config Board
-var boardSquares = {};
-var parentState = 0;
-var sunState = 0;
-var moonState = 0;
-
-
-function draw() {
-  box = parseInt(canvas.offsetWidth / 7);
-
-  canvas.style.opacity = '0';
-  drawParent(sunImages, sunColor);
-  drawParent(moonImages, moonColor);
-  drawBoard();
-  canvas.style.opacity = '1';
-
-  drawSquares();
-}
-
-// Parent
-function drawParent(parent, color) {
-  const pos = [
-    [0.5, 0.2], // top
-    [0.2, 0.5], // left
-    [0.5, 0.8], // bottom
-    [0.8, 0.5], // right
-  ];
-  canvas.width = box;
-  canvas.height = box;
-
-  for (var p of pos) {
-    ctx.beginPath();
-    ctx.arc(box / 2, box / 2, box / 2, 0, Math.PI * 2);
-    ctx.arc(box * p[0], box * p[1], box / 6, 0, Math.PI * 2);
-    ctx.fillStyle = color;
-    ctx.fill('evenodd');
-
-    const img = new Image();
-    img.src = canvas.toDataURL();
-    parent.push(img);
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
+export default class Board {
+  constructor(id) {
+    this.board = new Uint8Array(Math.ceil(7*7*7+1 / 8));
+    this.view = document.getElementById(id);
+    this.color = {
+      board: 'hsl(30, 59%, 53%)',
+      square: 'hsl(30, 59%, 38%)',
+      shadow: 'hsl(30, 59%, 68%)',
+      sun: 'hsl(30, 30%, 96%)',
+      moon: 'hsl(30, 20%, 10%)',
+      faction: [
+        'hsl(30, 59%, 68%)',
+        'hsl(190, 59%, 50%)', // 1.cyan
+        'hsl(320, 59%, 53%)', // 2.magenta
+        'hsl(110, 59%, 40%)', // 3.green
+        'hsl(55, 59%, 53%)', // 4.yellow
+        'hsl(220, 59%, 40%)', // 5.blue
+        'hsl(0, 59%, 53%)' // 6.red
+      ]
+    };
+    this.factions = [
+      [24], [16,17,18,23,25,30,31,32], [9,10,11,15,19,22,26,29,33,37,38,39],
+      [3,21,27,45], [1,2,4,5,7,8,12,13,14,20,28,34,35,36,40,41,43,44,46,47],
+      [0,6,42,48]
+    ];
+  }
+  // Game
+  getFaction(x, y) {
+    const pos = x * 7 + y;
+    switch (true) {
+      case this.factions[0].includes(pos): return 1; break;
+      case this.factions[1].includes(pos): return 2; break;
+      case this.factions[2].includes(pos): return 3; break;
+      case this.factions[3].includes(pos): return 4; break;
+      case this.factions[4].includes(pos): return 5; break;
+      case this.factions[5].includes(pos): return 6; break;
+      default: return 0;
+    }
+  }
+  // Bits Board
+  get(){
+    return this.board; 
+  }
+  set(board){ 
+    this.board = board;
+    this.showBoard(this.board);
+  }
+  setBitMode(bits, state){
+    bits[0] = state;
+  }
+  getBitMode(bits, index) {
+    return bits[0];
+  }
+  setBitPiece(bits, player, person, x, y, shadow, faction) {
+    const pos = 1 + (x * 7 + y) * 7;
+    if (person > -1) bits[pos + person] = 1;
+    if (person > -1) bits[pos + 4] = player;
+    bits[pos + 5] = shadow || 0;
+    bits[pos + 6] = faction || 0;
+  }
+  bitsToBase64(bits) {
+    let binary = '';
+    for (let i = 0; i < bits.length; i++) {
+      binary += String.fromCharCode(bits[i]);
+    }
+    return btoa(binary); // convierte a base64
+  }
+  base64ToBits(base64) {
+    const binary = atob(base64);
+    const bits = new Uint8Array(binary.length);
+    for (let i = 0; i < binary.length; i++) {
+      bits[i] = binary.charCodeAt(i);
+    }
+    return bits;
+  }
+  // Canvas
+  makeCanvas() {
+    this.canvas = document.createElement('canvas');
+    this.ctx = this.canvas.getContext('2d');
+    this.view.appendChild(this.canvas);
+    this.resizeCanvas();
+  }
+  resizeCanvas() {
+    this.box = Math.min(window.innerWidth, window.innerHeight) * 0.8 / 8;
+    this.canvas.width = this.box * 8.05;
+    this.canvas.height = this.box * 8.05;
+    this.canvas.style.backgroundColor = this.color.board;
+    this.canvas.style.borderRadius = (this.box * 0.05) + 'px';
+    this.drawBoard();
+  }
+  // Context
+  clearBoard() {console.log('clear')
+    this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+  }
+  drawBoard() {
+    this.ctx.fillStyle = this.color.square;
+    for (let i = 0; i<8; i++) {
+      this.ctx.fillRect(0.5 * this.box, (i + 0.5) * this.box, 7.05 * this.box, 0.05 * this.box);
+      this.ctx.fillRect((i + 0.5) * this.box, 0.5 * this.box, 0.05 * this.box, 7.05 * this.box);
+    }
+    const chakana = [
+      [0,0], [0,3], [0,6], [1,2], [1,4], [2,1], [2, 3], [2,5],
+      [3,0], [3,2], [3,4], [3,6], 
+      [4,1], [4,3], [4,5], [5,2], [5,4], [6,0], [6,3], [6,6]
+    ];
+    chakana.forEach(x =>this.drawSquare(x[0], x[1], this.color.square));
+  }
+  drawSquare(x, y, color) {
+    this.ctx.fillStyle = color;
+    this.ctx.fillRect((x + 0.54) * this.box, (y + 0.54) * this.box, 0.97 * this.box, 0.97 * this.box);
+  }
+  drawPiece(player, person, x, y) {
+    const position = [
+      [0.5, 0.3], [0.3, 0.5], [0.5, 0.7], [0.7, 0.5]
+    ][person] || [0.5, 0.3];
+    this.ctx.beginPath();
+    this.ctx.arc(
+      (x + 1) * this.box, (y + 1) * this.box, 
+      this.box * 0.8 / 2, 0, Math.PI * 2
+    );
+    this.ctx.arc(
+      (x + position[0] + 0.5) * this.box, (y + position[1] + 0.5) * this.box, 
+      this.box * 0.8 / 6, 0, Math.PI * 2
+    );
+    this.ctx.fillStyle = player ? this.color.moon : this.color.sun;
+    this.ctx.fill('evenodd');
+  }
+  drawText(x, y, size, color, text) {
+    this.ctx.font = parseInt(size * this.box) + 'px Arial';
+    this.ctx.fillStyle = color;
+    this.ctx.textAlign = 'left';
+    this.ctx.textBaseline = 'top';
+    this.ctx.fillText(text, x * this.box, y * this.box);
+  }
+  // Show
+  showBoard(board) {
+    const mode = this.getBitMode(board); // 0.yupana, 1.andes;
+    for(let x = 0; x<7; x++) {
+      for (let y = 0; y<7; y++) {
+        const pos = 1 + (x * 7 + y) * 7;
+        const person = board.slice(pos, pos + 4).indexOf(1);
+        const player = board[pos + 4];
+        const shadow = board[pos + 5];
+        const faction = board[pos + 6];
+        if (shadow) this.drawSquare(x, y, this.color.shadow);
+        else if (faction) {
+            const index = this.getFaction(x, y);
+            this.drawSquare(x, y, this.color.faction[index]);
+        }
+        if (person > -1) this.drawPiece(player, person, x, y);
+      }
+    }
+  }
+  showStep(step) {
+    if (!step || step.length < 5) return;
+    const player = step[0] == '-' ? 1 : 0;
+    const person = parseInt(step[1]);
+    const marks = step[0] == '-' ? 'ABCDEFG' : 'GFEDCBA';
+    const x = marks.indexOf(step[3]);
+    const y = step[0] == '-' ? parseInt(step[4]) : 6 - parseInt(step[4]);
+    this.drawPiece(player, person, x, y);
   }
 }
 
-// Board
-function drawBoard() {
-  const b = box;
-
-  canvas.width = b * 7;
-  canvas.height = b * 7;
-
-  ctx.fillStyle = lineColor;
-
-  for (var x = 1; x < 7; x++) {
-    ctx.fillRect(x * b, 0, 0.01 * b, 7 * b);
-    ctx.fillRect(0, x * b, 7 * b, 0.01 * b);
-  }
-
-  ctx.fillStyle = squareColor;
-  // Islas
-  ctx.fillRect(0, 0, b, b);
-  ctx.fillRect(0, 6 * b, b, b);
-  ctx.fillRect(6 * b, 0, b, b);
-  ctx.fillRect(6 * b, 6 * b, b, b);
-  // Continente
-  ctx.fillRect(0, 3 * b, 7 * b, b);
-  ctx.fillRect(3 * b, 0, b, 7 * b);
-  ctx.fillRect(1 * b, 2 * b, 5 * b, 3 * b);
-  ctx.fillRect(2 * b, 1 * b, 3 * b, 5 * b);
-
-  boardImage = new Image();
-  boardImage.src = canvas.toDataURL();
-}
-
-function boardClear() {
-  ctx.clearRect(0, 0, canvas.width, canvas.height);
-  ctx.drawImage(boardImage, 0, 0, canvas.width, canvas.height);
-}
-
+/*
 function addEventHover() {
   canvas.addEventListener('mousemove', (event) => {
     const rect = canvas.getBoundingClientRect();
@@ -112,35 +177,6 @@ function addEventHover() {
   });
 }
 
-// Squares
-function drawSquares() {
-  for (const key in boardSquares) {
-    const value = boardSquares[key];
-    const x = parseInt(key[1]) * box;
-    const y = parseInt(key[2]) * box;
-    const pad = box * 0.1;
-    const parent = value[0] == '+' ? 1 : -1;
-    const state = parseInt(value[1]);
-    const images = parent == 1 ? sunImages : moonImages;
-
-    ctx.drawImage(images[state], x + pad, y + pad, box * 0.8, box * 0.8);
-  }
-}
-
-// Text
-function drawText(x, y, size, color, text) {
-  ctx.font = parseInt(size * box) + 'px Arial';
-  ctx.fillStyle = color;
-  ctx.textAlign = 'left';
-  ctx.textBaseline = 'top';
-  ctx.fillText(text, x * box, y * box);
-}
-
-function drawRect(x, y, width, height, color) {
-  ctx.fillStyle = color;
-  ctx.fillRect(x * box, y * box, width * box, height * box);
-}
-
 function drawRectStroke(x, y, line, width, height, color) {
   ctx.strokeStyle = color;
   ctx.lineWidth = line * box;
@@ -153,7 +189,4 @@ function drawCircle(x, y, radio, color) {
   ctx.arc(x * box, y * box, radio * box / 2, 0, Math.PI * 2);
   ctx.fill();
 }
-
-// Init
-window.addEventListener('resize', draw);
-draw();
+*/

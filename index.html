@@ -4,31 +4,52 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Moixllik Games</title>
-    <link rel="stylesheet" href="./assets/style.css">
+    <link rel="stylesheet" href="./assets/css/chota.min.css">
+    <link rel="stylesheet" href="./assets/main.css">
   </head>
   <body>
-    <canvas id="board"></canvas>
-    <div class="main-menu">
-      <a class="brand" href="/">MOIXLLIK</a>
-      <menu>
-        <a href="./play/">Play</a>
-        <a href="./board/">Board</a>
-        <a href="./corpus/">Corpus</a>
-        <a href="./tutorial/">Tutorial</a>
-      </menu>
-      <hr>
-      <div class="flex is-center">
-        <a href="https://www.tiktok.com/@moixllik" target="_blank">
-          <img src="./assets/images/tiktok.svg" alt="tiktok">
-        </a>
-        <a href="https://x.com/moixllik" target="_blank">
-          <img src="./assets/images/x-twitter.svg" alt="x-twitter">
-        </a>
-        <a href="https://discord.gg/6me7JYRwS2" target="_blank">
-          <img src="./assets/images/discord.svg" alt="discord">
-        </a>
-      </div>
-    </div>
-    <script src="./assets/js/board.js"></script>
+    <main class="container">
+      <header class="nav">
+        <div class="nav-left">
+          <a href="." class="brand">MOIXLLIK</a>
+        </div>
+      </header>
+      <section class="text-center" id="board"></section>
+      <dialog class="card text-light" id="dialog">
+        <p>
+          <a class="button dark is-full-width" href="./play/">Play</a>
+        </p>
+        <p>
+          <a class="button dark is-full-width" href="./board/">Board</a>
+        </p>
+        <p>
+          <a class="button dark is-full-width" href="./corpus/">Corpus</a>
+        </p>
+        <p>
+          <a class="button dark is-full-width" href="./tutorial/">Tutorial</a>
+        </p>
+      </dialog>
+      <footer class="nav">
+        <div class="nav-left button clear text-dark">
+          &copy; 2025
+        </div>
+        <div class="nav-right">
+          <a href="https://x.com/moixllik" target="_blank">X</a>
+          <a href="https://www.tiktok.com/@moixllik" target="_blank">TikTok</a>
+          <a href="https://github.com/moixllik" target="_blank">GitHub</a>
+        </div>
+      </footer>
+    </main>
+    <script type="module">
+      import Board from './assets/js/board.js';
+      const board = new Board('board');
+      board.makeCanvas();
+      let my = board.base64ToBits(
+        'AQAAAQABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAAAAAA'
+      );
+      board.set(my);
+      document.getElementById('dialog').showModal();
+      window.addEventListener('resize', board.resizeCanvas.bind(board));
+    </script>
   </body>
 </html>

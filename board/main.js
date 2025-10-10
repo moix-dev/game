@@ -1,4 +1,9 @@
-'use strict';
+import Board from '../assets/js/board.js';
+const board = new Board('board');
+board.makeCanvas();
+window.addEventListener('resize', board.resizeCanvas.bind(board));
+
+/*'use strict';
 
 const barTop = document.getElementById('bar-top');
 const soundPly = document.getElementById('sound-ply');
@@ -115,4 +120,4 @@ canvas.addEventListener('click', event => {
 });
 
 window.addEventListener('hashchange', load);
-load();
+load();*/

@@ -1,5 +1,3 @@
-@import url(/assets/css/chota.min.css);
-
 :root {
   --bg-color: #222;
   --text-color: #fefefe;
@@ -14,4 +12,16 @@
   /* CHOTA */
   --color-primary: var(--board-color);
   --font-color: var(--text-color);
+}
+dialog.card {
+  z-index: 99;
+  max-width: 480px;
+  font-size: smaller;
+  .button {
+    font-size: smaller;
+  }
+}
+dialog::backdrop {
+  background: rgba(0, 0, 0, 0.3);
+  backdrop-filter: blur(1px);
 }
