@@ -1,131 +1,159 @@
 import Board from '../assets/js/board.js';
+
 const dialog = document.getElementById('dialog');
 const tpl = document.getElementById('tpl-dialog');
 const board = new Board('board');
 const tutorial = {
   'board/0': _=>{
     for (let x = 0; x<7;x++) {
-      board.drawText(6.8 - x, 7.6, 0.5, board.color.sun, 'ABCDEFG'[x]);
-      board.drawText(7.6, 6.8 - x, 0.5, board.color.sun, x.toString());
+      board.drawText(7.4 - x, 8.05, 0.5, board.color.sun, 'ABCDEFG'[x]);
+      board.drawText(8.05, 7.4 - x, 0.5, board.color.sun, x.toString());
     }
-    dialog.style.top = '10%';
-    dialog.style.right = '20%';
+    if (window.innerWidth > window.innerHeight) {
+      dialog.style.top = '10%';
+      dialog.style.right = '20%';
+    }
     return {
-      title: 'Sun Player',
-      desc: 'Marks: G, F, E, D, C, B, A<br>Scales: 0, 1, 2, 3, 4, 5, 6'
+      title: 'Sol',
+      desc: 'Marcas: G, F, E, D, C, B, A<br>Escalas: 0, 1, 2, 3, 4, 5, 6'
     }
   },
   'board/1': _=>{
     for (let x = 0; x<7;x++) {
-      board.drawText(x + 0.8, 0.1, 0.5, board.color.moon, 'ABCDEFG'[x]);
-      board.drawText(0.1, 6.8 - x, 0.5, board.color.moon, (6 - x).toString());
+      board.drawText(x + 1.4, 0.5, 0.5, board.color.moon, 'ABCDEFG'[x]);
+      board.drawText(0.6, 7.4 - x, 0.5, board.color.moon, (6 - x).toString());
     }
-    dialog.style.bottom = '10%';
-    dialog.style.left = '20%';
     return {
-      title: 'Moon Player',
-      desc: 'Marks: A, B, C, D, E, F, G<br>Scales: 0, 1, 2, 3, 4, 5, 6'
+      title: 'Luna',
+      desc: 'Marcas: A, B, C, D, E, F, G<br>Escalas: 0, 1, 2, 3, 4, 5, 6'
     }
   },
   'board/2': _=>{
     for (let x = 0; x<7;x++) {
-      board.drawText(6.8 - x, 7.6, 0.5, board.color.sun, '1235321'[x]);
-      board.drawText(7.6, 6.8 - x, 0.5, board.color.moon, x.toString());
+      board.drawText(7.4 - x, 8.05, 0.5, board.color.sun, '1235321'[x]);
+      board.drawText(8.05, 7.4 - x, 0.5, board.color.moon, x.toString());
     }
-    dialog.style.top = '10%';
-    dialog.style.right = '20%';
+    if (window.innerWidth > window.innerHeight) {
+      dialog.style.top = '10%';
+      dialog.style.right = '20%';
+    }
     return {
       title: 'Yupana',
-      desc: 'Weights: 1, 2, 3, 5, 3, 2, 1<br>Scales: 0, 1, 2, 3, 4, 5, 6'
+      desc: 'Pesos: 1, 2, 3, 5, 3, 2, 1<br>Escalas: 0, 1, 2, 3, 4, 5, 6'
+    }
+  },
+  'board/3': _=> {
+    board.drawText(6, 6.5,1, board.color.sun, 'I', null, 'center', 'middle');
+    board.drawText(2.5, 6,1, board.color.sun, 'II', null, 'center', 'middle');
+    board.drawText(3, 2.5,1, board.color.sun, 'III', null, 'center', 'middle');
+    board.drawText(6.5, 3,1, board.color.sun, 'IV', null, 'center', 'middle');
+    board.drawText(4.5,4.6,1, board.color.sun, 'X', 'Arial', 'center', 'middle');
+    board.drawSquare(4, 5, 4, 0.05, board.color.moon);
+    board.drawSquare(4, 4, 0.05, 4, board.color.moon);
+    board.drawSquare(1, 4, 4, 0.05, board.color.moon);
+    board.drawSquare(5, 1, 0.05, 4, board.color.moon);
+    if (window.innerWidth > window.innerHeight) {
+      dialog.style.right = '50%';
+    }
+    return {
+      title: 'Sectores',
+      desc: ''
     }
   },
   'pieces/0': _=>{
     board.set(board.base64ToBits(
       'AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAAAAAABAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAEAAAAAAAEAAAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAEAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA='
     ));
-    dialog.style.bottom = '1%';
+    if (window.innerWidth > window.innerHeight) {
+      dialog.style.right = '40%';
+    }
     return {
-      title: 'Person',
-      desc: 'Move a position to any location.'
+      title: 'Persona',
+      desc: ''
     }
   },
   'pieces/1': _=>{
     board.set(board.base64ToBits(
       'AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAAAAAABAAAAAQAAAAEAAAAAAAEAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA='
     ));
-    dialog.style.bottom = '1%';
+    if (window.innerWidth > window.innerHeight) {
+      dialog.style.right = '40%';
+    }
     return {
-      title: 'Military',
-      desc: 'Moves two positions horizontally or vertically.'
+      title: 'Militar',
+      desc: ''
     }
   },
   'pieces/2': _=>{ 
     board.set(board.base64ToBits(
       'AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA='
     ));
-    dialog.style.bottom = '1%';
+    if (window.innerWidth > window.innerHeight) {
+      dialog.style.top = '20%';
+      dialog.style.right = '50%';
+    }
     return {
-      title: 'Ruler',
-      desc: 'Moves two positions diagonally.<br>Right and left mean the same thing.'
+      title: 'Estatal',
+      desc: '(*) Puede ser hacia <br>la derecha o la izquierda.'
     }
   },
   'pieces/3': _=>{
     board.set(board.base64ToBits(
       'AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQABAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA='
     ));
-    dialog.style.bottom = '1%';
     return {
-      title: 'Attack',
-      desc: 'Moon Player "attacks" Sun Player<br> and replaces his position.'
+      title: 'Ataque',
+      desc: 'Luna ataca reemplazando la posición de Sol.'
     }
   },
   'pieces/4': _=>{
     board.set(board.base64ToBits(
       'AAAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAEBAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEBAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAQABAQABAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA='
     ));
-    dialog.style.bottom = '1%';
     return {
-      title: 'K.O.',
-      desc: 'As long as the center is occupied, only K.O.'
+      title: 'Derribo',
+      desc: 'Mientras se ocupa el centro, solo se permiten derribos a las piezas en medio del rival.'
     }
   },
   'squares/0': _=> {
     board.set(board.base64ToBits(
       'AAAAAAAAAQAAAAAAAAEAAAAAAAABAAAAAAAAAQAAAAAAAAEAAAAAAAABAAAAAAAAAQAAAAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAAAAAQAAAAAAAAEAAAAAAAABAAAAAAAAAQAAAAAAAAEAAAAAAAABAAAAAAAAAQA='
     ));
-    dialog.style.bottom = '40%';
+    if (window.innerWidth > window.innerHeight) {
+      dialog.style.top = '10%';
+    }
     return {
-      title: 'Edge',
-      desc: 'Squares on the edge of the board,<br> where Sun Player pieces are protected.'
+      title: 'Borde',
+      desc: ''
     }
   },
   'squares/1': _=> { 
     board.set(board.base64ToBits(
       'AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAEAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAEAAAAAAAABAAAAAAAAAQAAAAAAAAEAAAAAAAAAAAAAAAAAAQAAAAAAAAEAAAAAAAABAAAAAAAAAQAAAAAAAAEAAAAAAAABAAAAAAAAAQAAAAAAAAAAAAAAAAABAAAAAAAAAQAAAAAAAAEAAAAAAAABAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAAAAAABAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAA='
     ));
-    dialog.style.bottom = '0%';
+    if (window.innerWidth > window.innerHeight) {
+      dialog.style.right = '40%';
+    }
     return {
-      title: 'Continent',
-      desc: 'Squares on the continental part of the board.'
+      title: 'Continente',
+      desc: ''
     }
   },
   'squares/2': _=> {
     board.set(board.base64ToBits(
       'AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA='
     ));
-    dialog.style.bottom = '0%';
     return {
-      title: 'Center',
-      desc: 'Square in the center of the board,<br> also known as the peak of the continent.'
+      title: 'Centro',
+      desc: ''
     }
   },
   'squares/3': _=> {
     board.set(board.base64ToBits(
       'AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAAAAAQAAAAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAAAAAABAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA='
     ));
-    dialog.style.bottom = '0%';
     return {
-      title: 'Mountain',
+      title: 'Sierra',
       desc: ''
     }
   },
@@ -133,9 +161,11 @@ const tutorial = {
     board.set(board.base64ToBits(
       'AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAAAAAABAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAAAAAQAAAAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA='
     ));
-    dialog.style.bottom = '0%';
+    if (window.innerWidth > window.innerHeight) {
+      dialog.style.right = '40%';
+    }
     return {
-      title: 'Jungle',
+      title: 'Selva',
       desc: ''
     }
   },
@@ -143,9 +173,11 @@ const tutorial = {
     board.set(board.base64ToBits(
       'AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAA='
     ));
-    dialog.style.bottom = '0%';
+    if (window.innerWidth > window.innerHeight) {
+      dialog.style.top = '10%';
+    }
     return {
-      title: 'Coast',
+      title: 'Costa',
       desc: ''
     }
   },
@@ -153,9 +185,11 @@ const tutorial = {
     board.set(board.base64ToBits(
       'AAAAAAAAAAAAAAAAAAABAAAAAAAAAQAAAAAAAAAAAAAAAAABAAAAAAAAAQAAAAAAAAAAAAAAAAABAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAAAAAABAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAAAAAQAAAAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAAAAAQAAAAAAAAAAAAAAAAABAAAAAAAAAQAAAAAAAAAAAAAAAAABAAAAAAAAAQAAAAAAAAA='
     ));
-    dialog.style.bottom = '0%';
+    if (window.innerWidth > window.innerHeight) {
+      dialog.style.top = '10%';
+    }
     return {
-      title: 'Ocean',
+      title: 'Océano',
       desc: ''
     }
   },
@@ -163,10 +197,12 @@ const tutorial = {
     board.set(board.base64ToBits(
       'AAAAAAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAE='
     ));
-    dialog.style.bottom = '0%';
+    if (window.innerWidth > window.innerHeight) {
+      dialog.style.top = '10%';
+    }
     return {
-      title: 'Island',
-      desc: 'Increases the movement of the piece by a square.'
+      title: 'Islas',
+      desc: ''
     }
   }
 };

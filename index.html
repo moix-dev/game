@@ -1,9 +1,10 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
   <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Moixllik Games</title>
+    <title>Moixllik - Juegos e historias</title>
+    <meta name="description" content="Creado por Irving Montalvo para fomentar juegos e historias de los Andes.">
     <link rel="stylesheet" href="./assets/css/chota.min.css">
     <link rel="stylesheet" href="./assets/main.css">
   </head>
@@ -13,43 +14,62 @@
         <div class="nav-left">
           <a href="." class="brand">MOIXLLIK</a>
         </div>
+        <div class="nav-right">
+          <a class="button dark icon burger" onclick="dlgOpen()"></a>
+        </div>
       </header>
       <section class="text-center" id="board"></section>
       <dialog class="card text-light" id="dialog">
         <p>
-          <a class="button dark is-full-width" href="./play/">Play</a>
+          <a class="button dark" href="./play/">Jugar</a>
         </p>
         <p>
-          <a class="button dark is-full-width" href="./board/">Board</a>
+          <a class="button dark" href="./board/">Tablero</a>
         </p>
         <p>
-          <a class="button dark is-full-width" href="./corpus/">Corpus</a>
+          <a class="button dark" href="./corpus/">Corpus</a>
         </p>
         <p>
-          <a class="button dark is-full-width" href="./tutorial/">Tutorial</a>
+          <a class="button dark" href="./tutorial/">Tutorial</a>
+        </p>
+        <p>
+          <button class="button dark" onclick="dlgClose()">x</button>
         </p>
       </dialog>
       <footer class="nav">
-        <div class="nav-left button clear text-dark">
-          &copy; 2025
-        </div>
         <div class="nav-right">
           <a href="https://x.com/moixllik" target="_blank">X</a>
           <a href="https://www.tiktok.com/@moixllik" target="_blank">TikTok</a>
           <a href="https://github.com/moixllik" target="_blank">GitHub</a>
         </div>
+        <div class="nav-left button clear text-dark">
+          &copy; 2025
+        </div>
       </footer>
     </main>
     <script type="module">
       import Board from './assets/js/board.js';
+
       const board = new Board('board');
+      const dialog = document.getElementById('dialog');
+
       board.makeCanvas();
-      let my = board.base64ToBits(
-        'AQAAAQABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAAAAAA'
-      );
-      board.set(my);
-      document.getElementById('dialog').showModal();
-      window.addEventListener('resize', board.resizeCanvas.bind(board));
+      function display() {
+        board.resizeCanvas();
+        board.set(board.base64ToBits(
+          'AQAAAQABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAAAAAA'
+        ));
+        board.drawText(3.5, 3.6, 0.95, board.color.square, 'M', 'Arial', 'center', 'middle');
+        board.drawText(5.5, 3.6, 1, board.color.square, 'O', 'Arial', 'center', 'middle');
+        board.drawText(3.5, 5.6, 1, board.color.square, 'I', null, 'center', 'middle');
+        board.drawText(5.5, 5.6, 1, board.color.square, 'X', 'Arial', 'center', 'middle');
+      }
+
+      window.dlgOpen = _ => dialog.showModal();
+      window.dlgClose = _ => dialog.close();
+      window.addEventListener('resize', display);
+      display();
+      dlgOpen();
     </script>
   </body>
 </html>

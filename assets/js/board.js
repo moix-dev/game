@@ -81,9 +81,9 @@ export default class Board {
     this.resizeCanvas();
   }
   resizeCanvas() {
-    this.box = Math.min(window.innerWidth, window.innerHeight) * 0.8 / 8;
-    this.canvas.width = this.box * 8.05;
-    this.canvas.height = this.box * 8.05;
+    this.box = Math.min(window.innerWidth, window.innerHeight) * 0.9 / 9;
+    this.canvas.width = this.box * 9;
+    this.canvas.height = this.box * 9;
     this.canvas.style.backgroundColor = this.color.board;
     this.canvas.style.borderRadius = (this.box * 0.05) + 'px';
     this.drawBoard();
@@ -94,20 +94,28 @@ export default class Board {
   }
   drawBoard() {
     this.ctx.fillStyle = this.color.square;
-    for (let i = 0; i<8; i++) {
-      this.ctx.fillRect(0.5 * this.box, (i + 0.5) * this.box, 7.05 * this.box, 0.05 * this.box);
-      this.ctx.fillRect((i + 0.5) * this.box, 0.5 * this.box, 0.05 * this.box, 7.05 * this.box);
+    for (let i = 1; i<9; i++) {
+      this.ctx.fillRect(0.975 * this.box, (i - 0.025) * this.box, 7.05 * this.box, 0.05 * this.box);
+      this.ctx.fillRect((i - 0.025) * this.box, 0.975 * this.box, 0.05 * this.box, 7.05 * this.box);
     }
     const chakana = [
-      [0,0], [0,3], [0,6], [1,2], [1,4], [2,1], [2, 3], [2,5],
-      [3,0], [3,2], [3,4], [3,6], 
-      [4,1], [4,3], [4,5], [5,2], [5,4], [6,0], [6,3], [6,6]
+      [1,1], [1,4], [1,7], [2,3], [2,5], [3,2], [3, 4], [3,6],
+      [4,1], [4,3], [4,5], [4,7], 
+      [5,2], [5,4], [5,6], [6,3], [6,5], [7,1], [7,4], [7,7]
     ];
-    chakana.forEach(x =>this.drawSquare(x[0], x[1], this.color.square));
+    chakana.forEach(x =>this.drawSquare(x[0], x[1], 1, 1, this.color.square));
+    this.drawCircle(0.5, 0.5, 0.4, this.color.square);
+    this.drawCircle(8.5, 8.5, 0.4, this.color.square);
   }
-  drawSquare(x, y, color) {
+  drawSquare(x, y, w, h, color) {
     this.ctx.fillStyle = color;
-    this.ctx.fillRect((x + 0.54) * this.box, (y + 0.54) * this.box, 0.97 * this.box, 0.97 * this.box);
+    this.ctx.fillRect(x * this.box, y * this.box, w * this.box, h * this.box);
+  }
+  drawCircle(x, y, r, color) {
+    this.ctx.beginPath();
+    this.ctx.arc(x * this.box, y * this.box, r * this.box / 2, 0, Math.PI * 2);
+    this.ctx.fillStyle = color;
+    this.ctx.fill();
   }
   drawPiece(player, person, x, y) {
     const position = [
@@ -115,21 +123,21 @@ export default class Board {
     ][person] || [0.5, 0.3];
     this.ctx.beginPath();
     this.ctx.arc(
-      (x + 1) * this.box, (y + 1) * this.box, 
+      (x + 1.5) * this.box, (y + 1.5) * this.box, 
       this.box * 0.8 / 2, 0, Math.PI * 2
     );
     this.ctx.arc(
-      (x + position[0] + 0.5) * this.box, (y + position[1] + 0.5) * this.box, 
+      (x + position[0] + 1) * this.box, (y + position[1] + 1) * this.box, 
       this.box * 0.8 / 6, 0, Math.PI * 2
     );
     this.ctx.fillStyle = player ? this.color.moon : this.color.sun;
     this.ctx.fill('evenodd');
   }
-  drawText(x, y, size, color, text) {
-    this.ctx.font = parseInt(size * this.box) + 'px Arial';
+  drawText(x, y, size, color, text, family, align, baseLine) {
+    this.ctx.font = parseInt(size * this.box) + 'px ' + (family ?? 'monospace');
     this.ctx.fillStyle = color;
-    this.ctx.textAlign = 'left';
-    this.ctx.textBaseline = 'top';
+    this.ctx.textAlign = align ?? 'left';
+    this.ctx.textBaseline = baseLine ?? 'top';
     this.ctx.fillText(text, x * this.box, y * this.box);
   }
   // Show
@@ -142,10 +150,10 @@ export default class Board {
         const player = board[pos + 4];
         const shadow = board[pos + 5];
         const faction = board[pos + 6];
-        if (shadow) this.drawSquare(x, y, this.color.shadow);
+        if (shadow) this.drawSquare(x + 1.015, y + 1.015, 0.975, 0.975, this.color.shadow);
         else if (faction) {
             const index = this.getFaction(x, y);
-            this.drawSquare(x, y, this.color.faction[index]);
+            this.drawSquare(x + 1.015, y + 1.015, 0.975, 0.975, this.color.faction[index]);
         }
         if (person > -1) this.drawPiece(player, person, x, y);
       }
@@ -175,18 +183,5 @@ function addEventHover() {
 
     drawSquares();
   });
-}
-
-function drawRectStroke(x, y, line, width, height, color) {
-  ctx.strokeStyle = color;
-  ctx.lineWidth = line * box;
-  ctx.strokeRect(x * box, y * box, width * box, height * box);
-}
-
-function drawCircle(x, y, radio, color) {
-  ctx.beginPath();
-  ctx.fillStyle = color;
-  ctx.arc(x * box, y * box, radio * box / 2, 0, Math.PI * 2);
-  ctx.fill();
 }
 */

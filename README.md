@@ -1,11 +1,11 @@
-# Game
+# Juego e Historias
 
 ## Roadmap
 
-1. [x] Piece and board design.
-1. [x] Tutorial that describes: Pieces, board and other aspects.
-1. [x] Allow the free practice of the Andes and Yupana modality.
-1. [x] Content filtering in Corpus.
-1. [ ] Allow playing Andes mode as a turn-based duel over the Internet.
-1. [ ] Create a bot to perform duels.
-1. [ ] Platform to bathe in duel in Andes mode.
+1. [x] Diseño de tablero y piezas .
+1. [x] Tutorial, para describir el tablero y pieces.
+1. [x] Tablero para uso libre de juego enfocado en duelo local.
+1. [x] Filtrar contenido del Corpus.
+1. [ ] Permitir jugar un duelo en Internet en modo Andes.
+1. [ ] Crear plataforma que permita guardar resultados de los duelos en modo Andes.
+1. [ ] Crear bots para realizar duelos en Internet en caso no tener rival.

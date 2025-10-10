@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Tutorial - Moixllik</title>
+    <meta name="description" content="Tutorial para conocer el tablero y las piezas del juego.">
     <link rel="stylesheet" href="../assets/css/chota.min.css">
     <link rel="stylesheet" href="../assets/main.css">
   </head>
@@ -17,36 +18,36 @@
       <section class="text-center" id="board"></section>
       <dialog class="card text-light" id="dialog">
         <p>
-          <a class="button dark is-full-width" href="#board/0">Board</a>
+          <a class="button dark" href="#board/0">Tablero</a>
         </p>
         <p>
-          <a class="button dark is-full-width" href="#pieces/0">Pieces</a>
+          <a class="button dark" href="#pieces/0">Piezas</a>
         </p>
         <p>
-          <a class="button dark is-full-width" href="#squares/0">Squares</a>
+          <a class="button dark" href="#squares/0">Cuadros</a>
         </p>
         <p>
-          <a class="button dark is-full-width" href="../">&laquo; Back</a>
+          <a class="button dark" href="../">&laquo; Volver</a>
         </p>
       </dialog>
       <footer class="nav">
-        <div class="nav-left button clear text-dark">
-          &copy; 2025
-        </div>
         <div class="nav-right">
           <a href="https://x.com/moixllik" target="_blank">X</a>
           <a href="https://www.tiktok.com/@moixllik" target="_blank">TikTok</a>
           <a href="https://github.com/moixllik" target="_blank">GitHub</a>
         </div>
+        <div class="nav-left button clear text-dark">
+          &copy; 2025
+        </div>
       </footer>
     </main>
     <template id="tpl-dialog">
-      <h2>Title</h2>
-      <p>Description</p>
+      <h2>Título</h2>
+      <p>Descripción</p>
       <div class="grouped">
-        <button class="button dark" onclick="toPrev()">&laquo; Prev</button>
-        <a class="button dark" href="./">Close</a>
-        <button class="button dark" onclick="toNext()">Next &raquo;</button>
+        <button class="button dark" onclick="toPrev()">&laquo;</button>
+        <a class="button dark" href="./">x</a>
+        <button class="button dark" onclick="toNext()">&raquo;</button>
       </div>
     </template>
     <script type="module" src="./main.js"></script>

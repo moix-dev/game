@@ -13,15 +13,27 @@
   --color-primary: var(--board-color);
   --font-color: var(--text-color);
 }
+* {
+ outline: none;
+}
+.container {
+  padding: 0;
+}
 dialog.card {
+  bottom: 1%;
   z-index: 99;
   max-width: 480px;
-  font-size: smaller;
+  min-width: 240px;
   .button {
-    font-size: smaller;
+    width: 100%;
   }
 }
 dialog::backdrop {
   background: rgba(0, 0, 0, 0.3);
   backdrop-filter: blur(1px);
+}
+
+.icon.burger::after {
+  content: '|||';
+  transform: rotate(90deg);
 }
