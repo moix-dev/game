@@ -54,9 +54,13 @@
       const dialog = document.getElementById('dialog');
       const color = app.getColor(3);
 
-      app.pieces = app.base64ToBits('cwAAAAAAEwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAASwAAAAAAKw==');
       function display() {
         app.resize();
+        app.setCell(6,0,0,0,1,2);
+        app.setCell(6,6,0,0,1,1);
+        app.setCell(0,6,0,0,2,0);
+        app.setCell(0,0,0,0,2,3);
+        app.showPieces();
         app.drawText(3.525, 3.625, 0.95, color, 'M', 'Arial', 'center', 'middle');
         app.drawText(5.525, 3.625, 1, color, 'O', 'Arial', 'center', 'middle');
         app.drawText(3.525, 5.625, 1, color, 'I', null, 'center', 'middle');

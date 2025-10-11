@@ -3,16 +3,19 @@ export default class Board {
     this.global = global ? {sun:{state:0},moon:{state:0},player:0} : null;
     this.pieces = new Uint8Array(7*7);
     this.colors = null;
-    this.chakana = null;
+    this.chakana = '1001001001010001010101010101010101000101001001001'.split('').map(Number);
+    this.factions = '6554556553335553222354321234532223555333556554556'.split('').map(Number);
+    this.paths = [
+      '0 0,-1 -1,-1 0,-1 1,0 -1,0 1,1 -1,1 0,1 1',
+      '0 0,-2 -2,-2 2,-1 -1,-1 1,1 -1,1 1,2 -2,2 2',
+      '0 0,-2 0,-1 0,0 -2,0 -1,0 1,0 2,1 0,2 0',
+      '0 0,-2 -2,-2 2,-1 -1,-1 1,1 -1,1 1,2 -2,2 2'
+    ].map(x=>x.split(',').map(y=>y.split(' ').map(Number)));
     document.getElementById(id).appendChild(this.makeCanvas());
   }
   // BITS
-  setBit(bits, x, y, value) {
-    if (value) bits[x] |= 1 << y;
-    else bits[x] &= ~(1 << y);
-  }
-  getBit(bits, x, y) {
-    return (bits[x] >> y) & 1;
+  newPieces() {
+    this.pieces = new Uint8Array(7*7);
   }
   delCell(x,y) {
     this.pieces[x*7+y] = 0;
@@ -42,7 +45,6 @@ export default class Board {
   }
   // CANVAS
   makeCanvas() {
-    this.chakana = this.base64ToBits('SRQqVSoUSQ==');
     this.makeColors(30,59,53);
     this.canvas = document.createElement('canvas');
     this.ctx = this.canvas.getContext('2d');
@@ -62,13 +64,19 @@ export default class Board {
   }
   // COLORS
   makeColors(h,s,l) {
-    this.colors = new Uint8Array(6*2);
+    this.colors = new Uint8Array(12*2);
     this.setColor(0,h,s,l); // background
     this.setColor(1,h,95,95); // sun
     this.setColor(2,h,5,5); // moon
-    this.setColor(3,h,s-10,l-10); // square
-    this.setColor(4,h+180,s,l); // select
+    this.setColor(3,h,s,l*0.7); // square
+    this.setColor(4,(h+180)%360,s,70); // select
     this.setColor(5,h,s,l); // shadow
+    this.setColor(6,160,s,l); // 1.cyan
+    this.setColor(7,320,s,l); // 2.magenta
+    this.setColor(8,120,s,l); // 3.green
+    this.setColor(9,50,s,l); // 4.yellow
+    this.setColor(10,220,s,l); // 5.blue
+    this.setColor(11,0,s,l); // 6.red
   }
   setColor(index, h, s, l) {
     const H = Math.round(h/360*63);
@@ -114,10 +122,19 @@ export default class Board {
     this.ctx.textBaseline = baseLine ?? 'top';
     this.ctx.fillText(text, x * this.box, y * this.box);
   }
+  drawBox(x,y,w,h,line,color){
+    this.ctx.strokeStyle = color;
+    this.ctx.lineWidth = line*this.box;
+    this.ctx.strokeRect(x*this.box,y*this.box,w*this.box,h*this.box);
+  }
   // BOARD
-  showPiece(x, y, [border, square, player, position]) {
-    if (border) console.log(border);
-    if (square) console.log(square);
+  showPiece(x, y, [selected, square, player, position]) {
+    if (selected) this.showPath(x,y,position);
+    if (square) {
+      const color = square == 1 ? this.getColor(4) : 
+        this.getColor(this.factions[(x-1)*7+(y-1)] + 5);
+      this.drawRect(x+0.04,y+0.04,0.99,0.97,color);
+    }
     if (player) this.drawPiece(x,y,player-1,position);
   }
   showStates() {
@@ -136,13 +153,25 @@ export default class Board {
     for(let x=0;x<8;x++) {
       this.drawRect(1,x+1,7.05,0.05,color);
       this.drawRect(x+1,1,0.05,7.05,color);
+      for(let y=0;y<7;y++) {
+        if (this.chakana[x*7+y])
+          this.drawRect(x+1.04,y+1.04,0.99,0.97,color);
+      }
     }
     for(let x=0;x<7;x++) {
       for(let y=0;y<7;y++) {
-        if (this.getBit(this.chakana, x, y))
-          this.drawRect(x+1.04,y+1.04,0.99,0.97,color);
         this.showPiece(x+1,y+1, this.getCell(x,y));
       }
+    }
+  }
+  showPath(x,y,position) {
+    const color = this.getColor(4);
+    const path = this.paths[position];
+    for (let i of path) {
+      const xi = x+i[0];
+      const yi = y+i[1];
+      if ((xi>0&&xi<8)&&(yi>0&&yi<8))
+        this.drawBox(xi+0.025,yi+0.025,1,1,0.05,color);
     }
   }
   // EVENTS

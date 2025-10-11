@@ -63,7 +63,9 @@ const tutorial = {
     }
   },
   'pieces/0': _=>{
-    app.setCell(3,3,0,2,1,0);
+    app.newPieces();
+    app.setCell(3,3,1,2,1,0);
+    app.showPieces();
     if (window.innerWidth > window.innerHeight) {
       dialog.style.right = '40%';
     }
@@ -73,6 +75,9 @@ const tutorial = {
     }
   },
   'pieces/1': _=>{
+    app.newPieces();
+    app.setCell(3,3,1,2,1,2);
+    app.showPieces();
     if (window.innerWidth > window.innerHeight) {
       dialog.style.right = '40%';
     }
@@ -82,6 +87,9 @@ const tutorial = {
     }
   },
   'pieces/2': _=>{ 
+    app.newPieces();
+    app.setCell(3,3,1,2,1,1);
+    app.showPieces();
     if (window.innerWidth > window.innerHeight) {
       dialog.style.top = '20%';
       dialog.style.right = '50%';
@@ -92,27 +100,61 @@ const tutorial = {
     }
   },
   'pieces/3': _=>{
+    app.newPieces();
+    app.setCell(1,2,0,0,1,0);
+    app.setCell(5,2,0,0,1,2);
+    app.setCell(3,0,1,2,2,3);
+    app.showPieces();
     return {
       title: 'Ataque',
       desc: 'Luna ataca reemplazando la posición de Sol.'
     }
   },
   'pieces/4': _=>{
+    app.newPieces();
+    app.setCell(3,3,0,0,2,2);
+    app.setCell(0,1,0,0,1,3);
+    app.setCell(1,1,0,1,2,0);
+    app.setCell(2,1,0,2,1,1);
+    app.setCell(5,0,0,0,1,2);
+    app.setCell(5,1,0,1,2,3);
+    app.setCell(5,2,0,2,1,0);
+    app.showPieces();
     return {
       title: 'Derribo',
       desc: 'Mientras se ocupa el centro, solo se permiten derribos a las piezas en medio del rival.'
     }
   },
   'squares/0': _=> {
+    app.newPieces();
+    for(let x=0;x<7;x++) {
+      app.setCell(0,x,0,1,0,0);
+      app.setCell(x,0,0,1,0,0);
+      app.setCell(6,x,0,1,0,0);
+      app.setCell(x,6,0,1,0,0);
+    }
+    app.showPieces();
     if (window.innerWidth > window.innerHeight) {
       dialog.style.top = '10%';
     }
     return {
-      title: 'Borde',
+      title: 'Frontera',
       desc: ''
     }
   },
   'squares/1': _=> { 
+    app.newPieces();
+    for(let x=0;x<7;x++){
+      app.setCell(3,x,0,1,0,0);
+      app.setCell(x,3,0,1,0,0);
+      if (x<5) {
+        app.setCell(x+1,2,0,1,0,0);
+        app.setCell(x+1,4,0,1,0,0);
+        app.setCell(2,x+1,0,1,0,0);
+        app.setCell(4,x+1,0,1,0,0);
+      }
+    }
+    app.showPieces();
     if (window.innerWidth > window.innerHeight) {
       dialog.style.right = '40%';
     }
@@ -122,18 +164,31 @@ const tutorial = {
     }
   },
   'squares/2': _=> {
+    app.newPieces();
+    app.setCell(3,3,0,2,0,0);
+    app.showPieces();
     return {
       title: 'Centro',
       desc: ''
     }
   },
   'squares/3': _=> {
+    app.newPieces();
+    app.factions.forEach((f,i)=> {
+      if (f==2) app.setCell(Math.floor(i/7),i%7,0,2,0,0) 
+    });
+    app.showPieces();
     return {
       title: 'Sierra',
       desc: ''
     }
   },
   'squares/4': _=> {
+    app.newPieces();
+    app.factions.forEach((f,i)=> {
+      if (f==3) app.setCell(Math.floor(i/7),i%7,0,2,0,0) 
+    });
+    app.showPieces();
     if (window.innerWidth > window.innerHeight) {
       dialog.style.right = '40%';
     }
@@ -143,6 +198,11 @@ const tutorial = {
     }
   },
   'squares/5': _=> {
+    app.newPieces();
+    app.factions.forEach((f,i)=> {
+      if (f==4) app.setCell(Math.floor(i/7),i%7,0,2,0,0) 
+    });
+    app.showPieces();
     if (window.innerWidth > window.innerHeight) {
       dialog.style.top = '10%';
     }
@@ -151,7 +211,12 @@ const tutorial = {
       desc: ''
     }
   },
-  'squares/6': _=> {    
+  'squares/6': _=> {
+    app.newPieces();
+    app.factions.forEach((f,i)=> {
+      if (f==5) app.setCell(Math.floor(i/7),i%7,0,2,0,0) 
+    });
+    app.showPieces();
     if (window.innerWidth > window.innerHeight) {
       dialog.style.top = '10%';
     }
@@ -160,7 +225,12 @@ const tutorial = {
       desc: ''
     }
   },
-  'squares/7': _=> {    
+  'squares/7': _=> {
+    app.newPieces();
+    app.factions.forEach((f,i)=> {
+      if (f==6) app.setCell(Math.floor(i/7),i%7,0,2,0,0) 
+    });
+    app.showPieces();
     if (window.innerWidth > window.innerHeight) {
       dialog.style.top = '10%';
     }
@@ -178,13 +248,12 @@ const display = function display() {
   dialog.style = {top: '', bottom: '', left: '', right: ''};
   if (tuto) {
     const clone = tpl.content.cloneNode(true);
-    const data = tuto();console.log(app.bitsToBase64(app.pieces));
+    const data = tuto();
     clone.querySelector('h2').innerHTML = data.title;
     clone.querySelector('p').innerHTML = data.desc;
     dialog.innerHTML = '';
     dialog.appendChild(clone);
     dialog.show();
-    app.showPieces();
   }
   else dialog.showModal();
 };
