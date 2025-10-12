@@ -1,6 +1,6 @@
 export default class Board {
   constructor(id, global) {
-    this.global = global ? {sun:{state:0},moon:{state:0},player:0} : null;
+    this.global = global ? {sun:{state:0},moon:{state:0},player:0,selected:{}} : null;
     this.pieces = new Uint8Array(7*7);
     this.colors = null;
     this.chakana = '1001001001010001010101010101010101000101001001001'.split('').map(Number);
@@ -20,13 +20,29 @@ export default class Board {
   delCell(x,y) {
     this.pieces[x*7+y] = 0;
   }
-  setCell(x, y, border, square, player, position) {
+  setCell(x, y, path, square, player, position) {
     this.pieces[x * 7 + y] =
-      (border&1) | ((square&3)<<1) | ((player&3)<<3) | ((position&3)<<5);
+      (path&1) | ((square&3)<<1) | ((player&3)<<3) | ((position&3)<<5);
   }
   getCell(x, y) {
     const byte = this.pieces[x * 7 + y];
     return [byte>>0&1, byte>>1&3, byte>>3&3, byte>>5&3];
+  }
+  cellToLog(x,y,[path,square,player,position]) {
+    if (!player) return;
+    const pla = player == 2 ? '-' : '+';
+    const marks = player == 2 ? 'ABCDEFG' : 'GFEDCBA';
+    const scale = player == 2 ? y : 6 - y;
+    return `${pla}${position}.${marks[x]}${scale};`;
+  }
+  logToCell(log) {
+    if (log.length <5) return;
+    const player = log[0] == '-' ? 2 : 1;
+    const position = parseInt(log[1]);
+    const marks = player == 2 ? 'ABCDEFG' : 'GFEDCBA';
+    const x = marks.indexOf(log[3]);
+    const y = player == 2 ? parseInt(log[4]) : 6 - parseInt(log[4]);
+    return [x, y, player, position];
   }
   bitsToBase64(bits) {
     let binary = '';
@@ -49,10 +65,6 @@ export default class Board {
     this.canvas = document.createElement('canvas');
     this.ctx = this.canvas.getContext('2d');
     this.canvas.style.backgroundColor = this.getColor(0);
-    if (this.global) {
-      this.canvas.addEventListener('click', this.onClick.bind(this));
-      this.canvas.addEventListener('dblclick', this.onDblClick.bind(this));
-    }
     return this.canvas;
   }
   resize() {
@@ -180,39 +192,5 @@ export default class Board {
     const x = Math.floor((event.clientX - rect.left) / this.box);
     const y = Math.floor((event.clientY - rect.top) / this.box);
     return [x,y];
-  }
-  onClick(event) {
-    const [x,y] = this.getPosition(event);
-    if (x==8&&y==8) {
-      this.global.player = 1;
-      this.showStates();
-    }
-    else if (x==0&&y==0) {
-      this.global.player = 2;
-      this.showStates();
-    }
-    else if ((x>0 && x<8) && (y>0 && y<8)) {
-      if (this.pieces[(x-1)*7+(y-1)])
-        this.delCell(x-1,y-1);
-      else {
-        const player = this.global.player;
-        if (player == 1)
-          this.setCell(x-1,y-1,1,1,player,this.global.sun.state);
-        else if (player == 2)
-          this.setCell(x-1,y-1,1,1,player,this.global.moon.state);
-      }
-      this.showPieces();
-    }
-  }
-  onDblClick(event) {
-    const [x,y] = this.getPosition(event);
-    if (x==8&&y==8) {
-      this.global.sun.state = (this.global.sun.state + 1) % 4;
-      this.showStates();
-    }
-    else if (x==0&&y==0) {
-      this.global.moon.state = (this.global.moon.state + 1) % 4;
-      this.showStates();
-    }
   }
 }

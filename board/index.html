@@ -15,11 +15,20 @@
           <a href="../" class="brand">MOIXLLIK</a>
         </div>
         <div class="nav-right">
-          <a class="button dark icon burger"></a>
+          <a class="button dark icon burger" onclick="dlgOpen()"></a>
         </div>
       </header>
       <section class="text-center" id="board"></section>
-      <dialog class="card text-light" id="dialog"></dialog>
+      <dialog class="card text-light" id="dialog">
+        <form onsubmit="return false">
+          <p class="grouped">
+            <button class="button dark">Cargar</button>
+            <button type="button" class="button dark" onclick="copy()">Copiar</button>
+            <button type="button" class="button dark" onclick="dlgClose()">x</button>
+          </p>
+          <textarea rows="7" name="log" class="bg-dark text-light" placeholder="Piezas en el tablero"></textarea>
+        </form>
+      </dialog>
       <footer class="nav">
         <div class="nav-left">
           <a href="https://x.com/moixllik" target="_blank">X</a>
