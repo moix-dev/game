@@ -14,9 +14,16 @@
         <div class="nav-left">
           <a href="../" class="brand">MOIXLLIK</a>
         </div>
+        <div class="nav-right">
+          <a class="button dark icon burger" onclick="dlgOpen()"></a>
+        </div>
       </header>
       <section class="text-center" id="board"></section>
-      <dialog class="card text-light" id="dialog"></dialog>
+      <dialog class="card text-light" id="dialog">
+        <p>
+          <button class="button dark" onclick="dlgClose()">x</button>
+        </p>
+      </dialog>
       <footer class="nav">
         <div class="nav-left">
           <a href="https://x.com/moixllik" target="_blank">X</a>

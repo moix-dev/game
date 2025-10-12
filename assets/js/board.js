@@ -1,6 +1,7 @@
 export default class Board {
-  constructor(id, global) {
-    this.global = global ? {sun:{state:0},moon:{state:0},player:0,selected:{}} : null;
+  constructor(id, global, pc) {
+    if (pc) this.pc = new RTCPeerConnection({ iceServers: [{urls: 'stun:stun.l.google.com:19302'}] });
+    if (global) this.global = {sun:{state:0},moon:{state:0},player:0,selected:{}};
     this.pieces = new Uint8Array(7*7);
     this.colors = null;
     this.chakana = '1001001001010001010101010101010101000101001001001'.split('').map(Number);
@@ -44,21 +45,6 @@ export default class Board {
     const y = player == 2 ? parseInt(log[4]) : 6 - parseInt(log[4]);
     return [x, y, player, position];
   }
-  bitsToBase64(bits) {
-    let binary = '';
-    for (let i = 0; i < bits.length; i++) {
-      binary += String.fromCharCode(bits[i]);
-    }
-    return btoa(binary);
-  }
-  base64ToBits(base64) {
-    const binary = atob(base64);
-    const bits = new Uint8Array(binary.length);
-    for (let i = 0; i < binary.length; i++) {
-      bits[i] = binary.charCodeAt(i);
-    }
-    return bits;
-  }
   // CANVAS
   makeCanvas() {
     this.makeColors(30,59,53);
@@ -72,7 +58,15 @@ export default class Board {
     this.canvas.width = this.box * 9;
     this.canvas.height = this.box * 9;
     this.showPieces();
-    if (this.global) this.showStates();
+    if (this.global) {
+      this.showStates();
+      if (this.pc) {
+        const color = this.getColor(3);
+        this.showTime(1, color); this.showTime(2, color);
+        this.showKills(1, color); this.showKills(2, color);
+        this.showCaptures(1, color); this.showCaptures(2, color);
+      }
+    }
   }
   // COLORS
   makeColors(h,s,l) {
@@ -186,11 +180,41 @@ export default class Board {
         this.drawBox(xi+0.025,yi+0.025,1,1,0.05,color);
     }
   }
+  showTime(player, color) {
+    if (player == 1) {
+      this.drawText(1.1,8.2,0.6,color, '00:00');
+    }
+    else if (player == 2) {
+      this.drawText(6.1,0.3,0.6,color, '00:00');
+    }
+  }
+  showKills(player, color) {
+    if (player == 1) {
+      this.drawText(8.3,7.3,0.6,color, '0');
+    }
+    else if (player == 2) {
+      this.drawText(0.3,1.3,0.6,color, '0');
+    }
+  }
+  showCaptures(player, color){
+    if (player == 1) {
+      this.drawText(7.2,8.3,0.6,color, '00');
+    }
+    else if (player == 2) {
+      this.drawText(1.2,0.3,0.6,color, '00');
+    }
+  }
   // EVENTS
   getPosition(event) {
     const rect = this.canvas.getBoundingClientRect();
     const x = Math.floor((event.clientX - rect.left) / this.box);
     const y = Math.floor((event.clientY - rect.top) / this.box);
     return [x,y];
+  }
+  initTime() {
+    const time = 12 * 60 * 1000;
+    this.global.time = new Date();
+    this.global.sun.time = time;
+    this.global.moon.time = time;
   }
 }
