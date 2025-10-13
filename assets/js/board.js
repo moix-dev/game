@@ -155,7 +155,7 @@ export default class Board {
   }
   showPieces() {
     const color = this.getColor(3);
-    this.clearRect(1,1,7.05,7.05);
+    this.clearRect(0.975,0.975,7.05,7.05);
     for(let x=0;x<8;x++) {
       this.drawRect(1,x+1,7.05,0.05,color);
       this.drawRect(x+1,1,0.05,7.05,color);
@@ -177,7 +177,7 @@ export default class Board {
       const xi = x+i[0];
       const yi = y+i[1];
       if ((xi>0&&xi<8)&&(yi>0&&yi<8))
-        this.drawBox(xi+0.025,yi+0.025,1,1,0.05,color);
+        this.drawBox(xi+0.025,yi+0.025,0.975,0.975,0.05,color);
     }
   }
   showTime(player, color) {
