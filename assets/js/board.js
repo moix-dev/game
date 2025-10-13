@@ -50,13 +50,14 @@ export default class Board {
     this.makeColors(30,59,53);
     this.canvas = document.createElement('canvas');
     this.ctx = this.canvas.getContext('2d');
-    this.canvas.style.backgroundColor = this.getColor(0);
     return this.canvas;
   }
   resize() {
     this.box = Math.min(window.innerWidth, window.innerHeight) * 0.9 / 9;
-    this.canvas.width = this.box * 9;
-    this.canvas.height = this.box * 9;
+    const size = this.box * 9;
+    this.canvas.width = size;
+    this.canvas.height = size;
+    this.drawRect(0,0,size,size,this.getColor(0));
     this.showPieces();
     if (this.global) {
       this.showStates();
@@ -101,7 +102,7 @@ export default class Board {
   }
   // CONTEXT
   clearRect(x, y, w, h) {
-    this.ctx.clearRect(x * this.box, y * this.box, w * this.box, h * this.box);
+    this.drawRect(x,y,w,h,this.getColor(0));
   }
   drawRect(x, y, w, h, color) {
     this.ctx.fillStyle = color;
