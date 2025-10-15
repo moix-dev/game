@@ -14,15 +14,23 @@
       section .card { margin-block: 1em; }
     </style>
   </head>
-  <body class="container">
-    <h1 class="text-center"><a href="../">MOIXLLIK</a></h1>
-    <form class="grouped" id="form">
-      <input type="search" name="q" placeholder="Search" required>
-      <button>Search</button>
+  <body class="container" onload="search(event)">
+    <h1 class="text-center text-dark"><a href="./">MOIXLLIK</a></h1>
+    <form class="grouped" id="form" onsubmit="search(event)">
+      <a class="button dark" href="../">&laquo;</a>
+      <input type="search" name="q" value="@moixllik" placeholder="Search" required>
+      <button class="button dark">Search</button>
     </form>
     <section id="view"></section>
-    <footer class="text-center">
-      <p>&copy; 2025</p>
+    <footer class="nav">
+      <div class="nav-left">
+        <a href="https://x.com/moixllik" target="_blank">X</a>
+        <a href="https://www.tiktok.com/@moixllik" target="_blank">TikTok</a>
+        <a href="https://github.com/moixllik" target="_blank">GitHub</a>
+      </div>
+      <div class="nav-right button clear text-dark">
+        &copy; 2025
+      </div>
     </footer>
     <template id="tpl-book">
       <div class="card">
@@ -31,28 +39,26 @@
       </div>
     </template>
     <script>
-      document
-        .getElementById('form')
-        .addEventListener('submit', async function submit(event) {
-          event.preventDefault();
-          const query = encodeURIComponent(event.target.q.value);
-          const res = await fetch('../api/filter.json?q=' + query);
-          if (res.ok) {
-            const view = document.getElementById('view');
-            const tpl = document.getElementById('tpl-book');
-            const items = await res.json();
-            view.innerHTML = '';
-            items.forEach(x=>{
-              const clone = tpl.content.cloneNode(true);
-              const a = clone.querySelector('h2 a');
-              const p = clone.querySelector('p');
-              a.href = x.uri;
-              a.innerHTML = x.title;
-              p.innerHTML = x.desc;
-              view.appendChild(clone);
-            });
-          }
-        });
+      const view = document.getElementById('view');
+      const tplBook = document.getElementById('tpl-book');
+      async function search(event) {
+        event.preventDefault();
+        const query = encodeURIComponent(event.target.q?.value);
+        const res = await fetch('../api/filter.json?q=' + query);
+        if (res.ok) {
+          const items = await res.json();
+          view.innerHTML = '';
+          items.forEach(x=>{
+            const clone = tplBook.content.cloneNode(true);
+            const a = clone.querySelector('h2 a');
+            const p = clone.querySelector('p');
+            a.href = x.uri;
+            a.innerHTML = x.title;
+            p.innerHTML = x.desc;
+            view.appendChild(clone);
+          });
+        }
+      }
     </script>
   </body>
 </html>
