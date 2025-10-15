@@ -20,6 +20,7 @@
       </header>
       <section class="text-center" id="board"></section>
       <dialog class="card text-light" id="dialog">
+        <div></div>
         <p>
           <button class="button dark" onclick="dlgClose()">x</button>
         </p>
@@ -35,6 +36,11 @@
         </div>
       </footer>
     </main>
+    <template id="tpl-anon">
+      <form onsubmit="return false;">
+        <input type="text" name="username" placeholder="Username">
+      </form>
+    </template>
     <script type="module" src="./main.js"></script>
   </body>
 </html>

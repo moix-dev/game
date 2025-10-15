@@ -17,18 +17,10 @@
       </header>
       <section class="text-center" id="board"></section>
       <dialog class="card text-light" id="dialog">
-        <p>
-          <a class="button dark" href="#board/0">Tablero</a>
-        </p>
-        <p>
-          <a class="button dark" href="#pieces/0">Piezas</a>
-        </p>
-        <p>
-          <a class="button dark" href="#squares/0">Cuadros</a>
-        </p>
-        <p>
-          <a class="button dark" href="../">&laquo; Volver</a>
-        </p>
+        <a class="button dark" href="#board/0">Tablero</a>
+        <a class="button dark" href="#pieces/0">Piezas</a>
+        <a class="button dark" href="#squares/0">Cuadros</a>
+        <a class="button dark" href="../">&laquo; Volver</a>
       </dialog>
       <footer class="nav">
         <div class="nav-left">
@@ -41,9 +33,15 @@
         </div>
       </footer>
     </main>
+    <template id="tpl-en-menu">
+      <a class="button dark" href="#board/0">Board</a>
+      <a class="button dark" href="#pieces/0">Pieces</a>
+      <a class="button dark" href="#squares/0">Squares</a>
+      <a class="button dark" href="../">&laquo; Back</a>
+    </template>
     <template id="tpl-dialog">
-      <h2>Título</h2>
-      <p>Descripción</p>
+      <h2>Title</h2>
+      <p>Description</p>
       <div class="grouped">
         <button class="button dark" onclick="toPrev()">&laquo;</button>
         <a class="button dark" href="./">x</a>

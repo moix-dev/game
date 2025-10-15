@@ -14,6 +14,12 @@ export default class Board {
     ].map(x=>x.split(',').map(y=>y.split(' ').map(Number)));
     document.getElementById(id).appendChild(this.makeCanvas());
   }
+  getLang() {
+    let lang = localStorage.getItem('lang');
+    if (lang) return lang;
+    lang = navigator.language.slice(0,2) ?? 'en';
+    return lang;
+  }
   // BITS
   newPieces() {
     this.pieces = new Uint8Array(7*7);

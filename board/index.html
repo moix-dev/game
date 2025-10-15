@@ -20,13 +20,13 @@
       </header>
       <section class="text-center" id="board"></section>
       <dialog class="card text-light" id="dialog">
-        <form onsubmit="return false">
+        <form onsubmit="onSubmit(event)">
           <p class="grouped">
             <button class="button dark">Cargar</button>
             <button type="button" class="button dark" onclick="copy()">Copiar</button>
             <button type="button" class="button dark" onclick="dlgClose()">x</button>
           </p>
-          <textarea rows="7" name="log" class="bg-dark text-light" placeholder="Piezas en el tablero"></textarea>
+          <textarea rows="7" name="log" class="bg-dark text-light"></textarea>
         </form>
       </dialog>
       <footer class="nav">
@@ -40,6 +40,16 @@
         </div>
       </footer>
     </main>
+    <template id="tpl-en-form">
+      <form onsubmit="onSubmit(event)">
+        <p class="grouped">
+          <button class="button dark">Load</button>
+          <button type="button" class="button dark" onclick="copy()">Copy</button>
+          <button type="button" class="button dark" onclick="dlgClose()">x</button>
+        </p>
+        <textarea rows="7" name="log" class="bg-dark text-light"></textarea>
+      </form>
+    </template>
     <script type="module" src="./main.js"></script>
   </body>
 </html>

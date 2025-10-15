@@ -3,6 +3,7 @@ import App from '../assets/js/board.js';
 const dialog = document.getElementById('dialog');
 const tpl = document.getElementById('tpl-dialog');
 const app = new App('board');
+const lang = app.getLang();
 const color1 = app.getColor(1);
 const color2 = app.getColor(2);
 const tutorial = {
@@ -15,6 +16,12 @@ const tutorial = {
       dialog.style.top = '10%';
       dialog.style.right = '20%';
     }
+    if (lang != 'es') {
+      return {
+        title: 'Sun',
+        desc: 'Marks: G, F, E, D, C, B, A<br>Scales: 0, 1, 2, 3, 4, 5, 6'
+      }
+    }
     return {
       title: 'Sol',
       desc: 'Marcas: G, F, E, D, C, B, A<br>Escalas: 0, 1, 2, 3, 4, 5, 6'
@@ -24,6 +31,12 @@ const tutorial = {
     for (let x = 0; x<7;x++) {
       app.drawText(x + 1.4, 0.5, 0.5, color2, 'ABCDEFG'[x]);
       app.drawText(0.6, 7.4 - x, 0.5, color2, (6 - x).toString());
+    }
+    if (lang != 'es') {
+      return {
+        title: 'Moon',
+        desc: 'Marks: A, B, C, D, E, F, G<br>Scales: 0, 1, 2, 3, 4, 5, 6'
+      }
     }
     return {
       title: 'Luna',
@@ -38,6 +51,12 @@ const tutorial = {
     if (window.innerWidth > window.innerHeight) {
       dialog.style.top = '10%';
       dialog.style.right = '20%';
+    }
+    if (lang != 'es') {
+      return {
+        title: 'Yupana',
+        desc: 'Weights: 1, 2, 3, 5, 3, 2, 1<br>Scales: 0, 1, 2, 3, 4, 5, 6'
+      }
     }
     return {
       title: 'Yupana',
@@ -58,7 +77,7 @@ const tutorial = {
       dialog.style.right = '50%';
     }
     return {
-      title: 'Sectores',
+      title: lang == 'es' ? 'Sectores' : 'Sectors',
       desc: ''
     }
   },
@@ -70,7 +89,7 @@ const tutorial = {
       dialog.style.right = '40%';
     }
     return {
-      title: 'Persona',
+      title: lang == 'es' ? 'Persona' : 'Person',
       desc: ''
     }
   },
@@ -82,7 +101,7 @@ const tutorial = {
       dialog.style.right = '40%';
     }
     return {
-      title: 'Militar',
+      title: lang == 'es' ? 'Militar' : 'Military',
       desc: ''
     }
   },
@@ -94,9 +113,15 @@ const tutorial = {
       dialog.style.top = '20%';
       dialog.style.right = '50%';
     }
+    if (lang != 'es') {
+      return {
+        title: 'Ruler',
+        desc: '(*) It can be to the right or left.'
+      }
+    }
     return {
       title: 'Estatal',
-      desc: '(*) Puede ser hacia <br>la derecha o la izquierda.'
+      desc: '(*) Puede ser a la derecha o izquierda.'
     }
   },
   'pieces/3': _=>{
@@ -105,6 +130,12 @@ const tutorial = {
     app.setCell(5,2,0,0,1,2);
     app.setCell(3,0,1,2,2,3);
     app.showPieces();
+    if (lang != 'es') {
+      return {
+        title: 'Attack',
+        desc: "Moon attacks, replacing Sun's position."
+      }
+    }
     return {
       title: 'Ataque',
       desc: 'Luna ataca reemplazando la posición de Sol.'
@@ -120,9 +151,15 @@ const tutorial = {
     app.setCell(5,1,0,1,2,3);
     app.setCell(5,2,0,2,1,0);
     app.showPieces();
+    if (lang != 'es') {
+      return {
+        title: 'Capture',
+        desc: 'While the center is occupied, only surrounded pieces are allowed to be captured.'
+      }
+    }
     return {
-      title: 'Derribo',
-      desc: 'Mientras se ocupa el centro, solo se permiten derribos a las piezas en medio del rival.'
+      title: 'Captura',
+      desc: 'Mientras el centro esté ocupado, sólo se permitirá capturar piezas rodeadas.'
     }
   },
   'squares/0': _=> {
@@ -138,7 +175,7 @@ const tutorial = {
       dialog.style.top = '10%';
     }
     return {
-      title: 'Frontera',
+      title: lang == 'es' ? 'Frontera' : 'Border',
       desc: ''
     }
   },
@@ -159,7 +196,7 @@ const tutorial = {
       dialog.style.right = '40%';
     }
     return {
-      title: 'Continente',
+      title: lang == 'es' ? 'Continente' : 'Continent',
       desc: ''
     }
   },
@@ -168,7 +205,7 @@ const tutorial = {
     app.setCell(3,3,0,2,0,0);
     app.showPieces();
     return {
-      title: 'Centro',
+      title: lang == 'es' ? 'Centro' : 'Center',
       desc: ''
     }
   },
@@ -179,7 +216,7 @@ const tutorial = {
     });
     app.showPieces();
     return {
-      title: 'Sierra',
+      title: lang == 'es' ? 'Sierra' : 'Mountains',
       desc: ''
     }
   },
@@ -193,7 +230,7 @@ const tutorial = {
       dialog.style.right = '40%';
     }
     return {
-      title: 'Selva',
+      title: lang == 'es' ? 'Selva' : 'Jungle',
       desc: ''
     }
   },
@@ -207,7 +244,7 @@ const tutorial = {
       dialog.style.top = '10%';
     }
     return {
-      title: 'Costa',
+      title: lang == 'es' ? 'Costa' : 'Coast',
       desc: ''
     }
   },
@@ -221,7 +258,7 @@ const tutorial = {
       dialog.style.top = '10%';
     }
     return {
-      title: 'Océano',
+      title: lang == 'es' ? 'Océano' : 'Ocean',
       desc: ''
     }
   },
@@ -235,7 +272,7 @@ const tutorial = {
       dialog.style.top = '10%';
     }
     return {
-      title: 'Islas',
+      title: lang == 'es' ? 'Islas' : 'Islands',
       desc: ''
     }
   }
@@ -257,6 +294,11 @@ const display = function display() {
   }
   else dialog.showModal();
 };
+if (lang != 'es') {
+  const clone = document.getElementById('tpl-en-menu').content.cloneNode(true);
+  dialog.innerHTML = '';
+  dialog.appendChild(clone);
+}
 window.toNext = _=>{
   const hash = location.hash.slice(1).split('/');
   const key = hash[0] + '/' + (parseInt(hash[1]) + 1);

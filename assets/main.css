@@ -36,6 +36,11 @@ dialog.card {
   min-width: 240px;
   .button {
     width: 100%;
+    display: block;
+    margin-block: 0.2em;
+  }
+  .button+.button {
+    margin-left: 0;
   }
 }
 dialog::backdrop {

@@ -2,8 +2,13 @@ import App from '../assets/js/board.js';
 
 const storage = sessionStorage;
 const dialog = document.getElementById('dialog');
-const form = dialog.querySelector('form');
 const app = new App('board', true);
+
+if (app.getLang() != 'es') {
+  const clone = document.getElementById('tpl-en-form').content.cloneNode(true);
+  dialog.innerHTML = '';
+  dialog.appendChild(clone);
+}
 
 function display() {
   app.resize();
@@ -64,7 +69,8 @@ app.canvas.addEventListener('dblclick', event => {
     app.showStates();
   }
 });
-form.addEventListener('submit', event => {
+window.onSubmit = (event) => {
+  event.preventDefault();
   const logs = event.target.log.value.split(';');
   if (logs.length > 0) app.newPieces();
   logs.forEach(log=>{
@@ -73,11 +79,13 @@ form.addEventListener('submit', event => {
     if (player) app.setCell(x,y,0,0,player,position);
   });
   if (logs.length > 0) app.showPieces();
-});
+};
 window.copy = _=>{
+  const form = dialog.querySelector('form');
   navigator.clipboard.writeText(form.log.value);
 };
 window.dlgOpen = _=>{
+  const form = dialog.querySelector('form');
   form.log.value = '';
   for (let y=6;y>-1;y--) {
     for (let x=6;x>-1;x--) {
