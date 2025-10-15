@@ -19,9 +19,24 @@
         </div>
       </header>
       <section class="text-center" id="board"></section>
-      <dialog class="card text-light" id="dialog">
-        <div></div>
-        <button class="button dark" onclick="dlgClose()">x</button>
+      <dialog class="card" id="dialog">
+        <button>Competitivo</button>
+        <fieldset>
+          <legend>Partida Privada</legend>
+          <div class="grouped">
+            <input type="text" placeholder="ID">
+            <button class="is-auto-width">Jugar</button>
+          </div>
+          <div class="grouped">
+            <input type="time" value="12:00" placeholder="Tiempo">
+            <select>
+              <option value="1">Sol</option>
+              <option value="2">Luna</option>
+            </select>
+          </div>
+          <button>Crear</button>
+        </fieldset>
+        <button onclick="dlgClose()">x</button>
       </dialog>
       <footer class="nav">
         <div class="nav-left">

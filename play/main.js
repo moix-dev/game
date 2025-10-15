@@ -1,6 +1,5 @@
 import App from '../assets/js/board.js';
 
-const db = localStorage;
 const app = new App('board', true, true);
 const dialog = document.getElementById('dialog');
 

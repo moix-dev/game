@@ -1,7 +1,7 @@
 export default class Board {
   constructor(id, global, pc) {
     if (pc) this.pc = new RTCPeerConnection({ iceServers: [{urls: 'stun:stun.l.google.com:19302'}] });
-    if (global) this.global = {sun:{state:0},moon:{state:0},player:0,selected:{}};
+    if (global) this.global = {sun:{state:0},moon:{state:0},player:0,selected:{},match:{}};
     this.pieces = new Uint8Array(7*7);
     this.colors = null;
     this.chakana = '1001001001010001010101010101010101000101001001001'.split('').map(Number);

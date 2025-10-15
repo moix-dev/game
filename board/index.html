@@ -19,14 +19,14 @@
         </div>
       </header>
       <section class="text-center" id="board"></section>
-      <dialog class="card text-light" id="dialog">
+      <dialog class="card" id="dialog">
         <form onsubmit="onSubmit(event)">
           <p class="grouped">
-            <button class="button dark">Cargar</button>
-            <button type="button" class="button dark" onclick="copy()">Copiar</button>
-            <button type="button" class="button dark" onclick="dlgClose()">x</button>
+            <button>Cargar</button>
+            <button type="button" onclick="copy()">Copiar</button>
+            <button type="button" onclick="dlgClose()">x</button>
           </p>
-          <textarea rows="7" name="log" class="bg-dark text-light"></textarea>
+          <textarea rows="7" name="log" placeholder="Piezas"></textarea>
         </form>
       </dialog>
       <footer class="nav">
@@ -43,11 +43,11 @@
     <template id="tpl-en-form">
       <form onsubmit="onSubmit(event)">
         <p class="grouped">
-          <button class="button dark">Load</button>
-          <button type="button" class="button dark" onclick="copy()">Copy</button>
-          <button type="button" class="button dark" onclick="dlgClose()">x</button>
+          <button>Load</button>
+          <button type="button" onclick="copy()">Copy</button>
+          <button type="button" onclick="dlgClose()">x</button>
         </p>
-        <textarea rows="7" name="log" class="bg-dark text-light"></textarea>
+        <textarea rows="7" name="log" placeholder="Pieces"></textarea>
       </form>
     </template>
     <script type="module" src="./main.js"></script>
