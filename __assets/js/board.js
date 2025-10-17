@@ -1,4 +1,4 @@
-export default class Board {
+/*export default class Board {
   constructor(id, global, pc) {
     if (pc) this.pc = new RTCPeerConnection({ iceServers: [{urls: 'stun:stun.l.google.com:19302'}] });
     if (global) this.global = {sun:{state:0},moon:{state:0},player:0,selected:{},match:{}};
@@ -224,4 +224,4 @@ export default class Board {
     this.global.sun.time = time;
     this.global.moon.time = time;
   }
-}
+}*/

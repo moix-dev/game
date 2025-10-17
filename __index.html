@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Moixllik - Juegos e historias</title>
+    <meta name="description" content="Creado por Irving Montalvo para fomentar juegos e historias de los Andes.">
+    <link rel="stylesheet" href="./assets/css/chota.min.css">
+    <link rel="stylesheet" href="./assets/main.css">
+  </head>
+  <body>
+    <main class="container">
+      <header class="nav">
+        <div class="nav-left">
+          <a href="." class="brand">MOIXLLIK</a>
+        </div>
+        <div class="nav-right">
+          <a class="button dark icon burger" onclick="dlgOpen()"></a>
+        </div>
+      </header>
+      <section class="text-center" id="board"></section>
+      <dialog class="card" id="dialog">
+        <div>
+          <a class="button" href="./play/">Jugar</a>
+          <a class="button" href="./board/">Tablero</a>
+          <a class="button" href="./corpus/">Corpus</a>
+          <a class="button" href="./tutorial/">Tutorial</a>
+        </div>
+        <button class="button dark" onclick="dlgClose()">x</button>
+      </dialog>
+      <footer class="nav">
+        <div class="nav-left">
+          <a href="https://x.com/moixllik" target="_blank">X</a>
+          <a href="https://www.tiktok.com/@moixllik" target="_blank">TikTok</a>
+          <a href="https://github.com/moixllik" target="_blank">GitHub</a>
+        </div>
+        <div class="nav-right button clear text-dark">
+          &copy; 2025
+        </div>
+      </footer>
+    </main>
+    <template id="tpl-en-menu">
+      <a class="button" href="./play/">Play</a>
+      <a class="button" href="./board/">Board</a>
+      <a class="button" href="./corpus/">Corpus</a>
+      <a class="button" href="./tutorial/">Tutorial</a>
+    </template>
+    <script type="module">
+      import App from './assets/js/board.js';
+
+      const app = new App('board');
+      const dialog = document.getElementById('dialog');
+      const color = app.getColor(3);
+
+      if (app.getLang() != 'es') {
+        const clone = document.getElementById('tpl-en-menu').content.cloneNode(true);
+        const view = dialog.querySelector('div');
+        view.innerHTML = '';
+        view.appendChild(clone);
+      }
+
+      function display() {
+        app.resize();
+        app.setCell(6,0,0,0,1,2);
+        app.setCell(6,6,0,0,1,1);
+        app.setCell(0,6,0,0,2,0);
+        app.setCell(0,0,0,0,2,3);
+        app.showPieces();
+        app.drawText(3.525, 3.625, 0.95, color, 'M', 'Arial', 'center', 'middle');
+        app.drawText(5.525, 3.625, 1, color, 'O', 'Arial', 'center', 'middle');
+        app.drawText(3.525, 5.625, 1, color, 'I', null, 'center', 'middle');
+        app.drawText(5.525, 5.625, 1, color, 'X', 'Arial', 'center', 'middle');
+      }
+
+      window.dlgOpen = _ => dialog.showModal();
+      window.dlgClose = _ => dialog.close();
+      window.addEventListener('resize', display);
+      display();
+      dlgOpen();
+    </script>
+  </body>
+</html>

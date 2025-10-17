@@ -1,4 +1,4 @@
-import App from '../assets/js/board.js';
+/*import App from '../assets/js/board.js';
 
 const storage = sessionStorage;
 const dialog = document.getElementById('dialog');
@@ -101,4 +101,4 @@ window.dlgClose = _=>{
   dialog.close();
 };
 window.addEventListener('resize', display);
-display();
+display();*/
